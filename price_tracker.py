@@ -35,7 +35,6 @@ def record_prices(offers: list[dict]) -> None:
             "currency": offer["currency"],
             "date": now,
             "departure_date": offer["departure_date"],
-            "return_date": offer["return_date"],
         })
 
     _save_json(config.PRICE_HISTORY_FILE, history)
