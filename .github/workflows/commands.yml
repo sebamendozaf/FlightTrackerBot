@@ -1,0 +1,48 @@
+name: Telegram Commands
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: telegram-commands
+  cancel-in-progress: true
+
+jobs:
+  handle-commands:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install requests python-dotenv
+
+      - name: Load preferences
+        uses: actions/cache@v4
+        with:
+          path: data/
+          key: price-history-commands-${{ github.run_id }}
+          restore-keys: |
+            price-history-
+
+      - name: Process commands
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          ORIGIN_AIRPORT: SCL
+          ACTIVE_GROUPS: europa,oceania
+        run: python -c "import telegram_commands; telegram_commands.process_commands()"
+
+      - name: Save preferences
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: data/
+          key: price-history-commands-${{ github.run_id }}
