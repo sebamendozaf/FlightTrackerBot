@@ -1,0 +1,13 @@
+.env
+CLAUDE.md
+__pycache__/
+*.pyc
+venv/
+.venv/
+data/price_history.json
+data/notified_deals.json
+data/user_preferences.json
+data/rotation.json
+*.egg-info/
+dist/
+build/
