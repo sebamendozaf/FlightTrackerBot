@@ -10,6 +10,11 @@
 | `telegram_commands.py` | Procesamiento de comandos (/info, /precio, /mes) | No |
 | `price_tracker.py` | Historial de precios y detección de ofertas | No |
 | `.env` | Tokens y variables sensibles (no se sube a git) | **Sí** |
+| `cloudflare_trigger.js` | Cloudflare Worker — dispara check_flights.yml cada 15 min exactos | No |
 | `check_flights.yml` | Workflow GitHub Actions — búsqueda de vuelos cada 15 min | Solo frecuencia |
 | `commands.yml` | Workflow GitHub Actions — comandos Telegram cada 5 min | Solo frecuencia |
 | `data/*.json` | Historial, notificaciones, preferencias (autogenerado) | No tocar |
+
+---
+
+*FlightTrackerBot_V1_9*

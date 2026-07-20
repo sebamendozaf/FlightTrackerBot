@@ -8,8 +8,8 @@
 //   */15 * * * *
 
 export default {
-  async scheduled(event, env) {
-    await fetch(
+  async scheduled(event, env, ctx) {
+    ctx.waitUntil(fetch(
       "https://api.github.com/repos/sebamendozaf/FlightTrackerBot/actions/workflows/check_flights.yml/dispatches",
       {
         method: "POST",
@@ -17,9 +17,10 @@ export default {
           Authorization: `token ${env.GITHUB_TOKEN}`,
           Accept: "application/vnd.github.v3+json",
           "Content-Type": "application/json",
+          "User-Agent": "FlightTrackerBot-Worker",
         },
         body: JSON.stringify({ ref: "main" }),
       }
-    );
+    ));
   },
 };

@@ -9,6 +9,9 @@ concurrency:
   group: telegram-commands
   cancel-in-progress: true
 
+permissions:
+  actions: write
+
 jobs:
   handle-commands:
     runs-on: ubuntu-latest
@@ -37,6 +40,8 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
           ORIGIN_AIRPORT: SCL
           ACTIVE_GROUPS: europa,oceania
         run: python -c "import telegram_commands; telegram_commands.run_loop(240)"

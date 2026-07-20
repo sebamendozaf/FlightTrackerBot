@@ -52,3 +52,7 @@ GitHub Actions
 │
 └─ 8. Envía ofertas nuevas a Telegram con precio, fecha y link a Google Flights
 ```
+
+---
+
+*FlightTrackerBot_V1_9*

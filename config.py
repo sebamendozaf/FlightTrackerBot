@@ -63,7 +63,7 @@ def get_threshold_for_destination(iata_code: str) -> float | None:
 
 # Búsqueda solo ida, cada día del mes, con rotación
 SEARCH_DAYS_AHEAD_MAX = 180
-DAYS_PER_RUN = 5  # cuántos días busca cada corrida (rotación)
+DAYS_PER_RUN = 2  # cuántos días busca cada corrida (rotación)
 
 PRICE_HISTORY_FILE = os.path.join(os.path.dirname(__file__), "data", "price_history.json")
 NOTIFIED_DEALS_FILE = os.path.join(os.path.dirname(__file__), "data", "notified_deals.json")

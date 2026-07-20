@@ -1,7 +1,10 @@
 import json
+import math
+import calendar
 import os
 import time
 import requests
+from datetime import datetime
 import config
 import telegram_bot
 
@@ -134,6 +137,31 @@ def _find_destination_by_name(name: str) -> list[dict]:
     return []
 
 
+def _trigger_month_scan(month: int) -> int:
+    token = os.getenv("GITHUB_TOKEN")
+    repo = os.getenv("GITHUB_REPOSITORY", "sebamendozaf/FlightTrackerBot")
+    if not token:
+        return 0
+    year = datetime.now().year
+    if month < datetime.now().month:
+        year += 1
+    _, days_in_month = calendar.monthrange(year, month)
+    runs = math.ceil(days_in_month / config.DAYS_PER_RUN)
+    url = f"https://api.github.com/repos/{repo}/actions/workflows/check_flights.yml/dispatches"
+    headers = {
+        "Authorization": f"token {token}",
+        "Accept": "application/vnd.github.v3+json",
+        "Content-Type": "application/json",
+        "User-Agent": "FlightTrackerBot",
+    }
+    for _ in range(runs):
+        try:
+            requests.post(url, headers=headers, json={"ref": "main"}, timeout=10)
+        except Exception:
+            pass
+    return runs
+
+
 def _get_effective_threshold(iata_code: str) -> float | None:
     custom = get_custom_thresholds()
     if iata_code in custom:
@@ -263,7 +291,9 @@ def _dispatch(text: str, prefs: dict) -> None:
                 month = _parse_month(arg)
                 if month:
                     prefs["month"] = month
-                    telegram_bot.send_message(f"Listo, buscando vuelos para <b>{_month_name(month)}</b>.")
+                    runs = _trigger_month_scan(month)
+                    extra = f"\nEscaneo iniciado: {runs} búsquedas en cola." if runs else ""
+                    telegram_bot.send_message(f"Listo, buscando vuelos para <b>{_month_name(month)}</b>.{extra}")
                 else:
                     telegram_bot.send_message(f"No entendí '{arg}'. Usa nombre de mes o número (1-12).")
 

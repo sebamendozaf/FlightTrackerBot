@@ -6,6 +6,7 @@ Tracks one-way flight prices from Santiago (SCL) to Europe, Australia and New Ze
 ![Playwright](https://img.shields.io/badge/Playwright-1.40+-2EAD33?logo=playwright&logoColor=white)
 ![Telegram](https://img.shields.io/badge/Telegram-Bot_API-26A5E4?logo=telegram&logoColor=white)
 ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-free-2088FF?logo=githubactions&logoColor=white)
+![Cloudflare Workers](https://img.shields.io/badge/Cloudflare_Workers-scheduler-F38020?logo=cloudflare&logoColor=white)
 
 ## How it works
 
@@ -53,4 +54,17 @@ ayuda             → list commands
 | **Google Flights** | price source |
 | **Telegram Bot API** | commands and alerts |
 | **GitHub Actions** | scheduling (free for public repos) |
+| **Cloudflare Workers** | reliable cron trigger (every 15 min exact) |
 | **Amadeus API** | secondary price source (optional) |
+
+## Disclaimer
+
+Personal project for educational and personal use only. Not affiliated with, endorsed by, or connected to Google, Telegram, Amadeus, or any airline.
+
+Automated access to Google Flights may conflict with [Google's Terms of Service](https://policies.google.com/terms). This tool is intended solely for personal, non-commercial use. Use at your own risk. The author assumes no liability for any misuse or consequences arising from the use of this software.
+
+This software is provided "as is", without warranty of any kind.
+
+---
+
+*FlightTrackerBot_V1_9*
